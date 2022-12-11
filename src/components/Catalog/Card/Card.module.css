@@ -17,6 +17,7 @@
     margin: 0 auto;
     width: 202px;
     height: 300px;
+    border-radius: 8px;
     object-fit: contain;
     transition: all 500ms ease;
 }

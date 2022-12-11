@@ -74,6 +74,12 @@
     gap: 36px;
 }
 
+.order_item__meta{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 .full_price {
     font-weight: 700;
 }

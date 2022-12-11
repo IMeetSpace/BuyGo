@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import classes from './Card.module.css';
@@ -8,10 +8,10 @@ export default function Card(props) {
   let rating = [];
 
   for (let i = 0; i < props.props.rating; i++) {
-    rating.push(<SvgSelector id="star" active={classes.active} />);
+    rating.push(<SvgSelector key={`${i} active`} id="star" active={classes.active} />);
   }
   for (let i = 0; i < 5 - props.props.rating; i++) {
-    rating.push(<SvgSelector id="star" />);
+    rating.push(<SvgSelector key={`${i}`} id="star" />);
   }
 
   let inCart = () => {
@@ -37,7 +37,7 @@ export default function Card(props) {
   return (
     <div className={classes.card}>
       <img className={classes.img} src={'./img/' + props.props.img}></img>
-      <h3 className={classes.price}>{props.props.price} &#8381;</h3>
+      <h3 className={classes.price}>{props.props.price.toLocaleString()} &#8381;</h3>
       <div className={classes.data}>
         <div className={classes.title}>{props.props.title}</div>
         <div className={classes.maker}>{props.props.maker}</div>

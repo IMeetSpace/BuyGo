@@ -19,7 +19,6 @@ export default function CartItem(props) {
               <div
                 className={props.props.count > 50 ? classes.minus : classes.minus_off}
                 onClick={() => {
-                  console.log(props.props.count);
                   props.updateCartCount(props.props, props.props.count - 50);
                 }}>
                 <SvgSelector id="minus" />
@@ -28,7 +27,6 @@ export default function CartItem(props) {
               <div
                 className={props.props.count < 500 ? classes.plus : classes.plus_off}
                 onClick={() => {
-                  console.log(props.props.count);
                   props.updateCartCount(props.props, props.props.count + 50);
                 }}>
                 <SvgSelector id="plus" />

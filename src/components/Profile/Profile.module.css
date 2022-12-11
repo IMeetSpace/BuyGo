@@ -103,3 +103,7 @@
     height: 80px;
     border-radius: 8px;
 }
+
+.status {
+    color: #888888;
+}

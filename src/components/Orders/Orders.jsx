@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import classes from './Orders.module.css';
@@ -7,6 +7,45 @@ import OrderItem from './OrderItem/OrderItem';
 import SvgSelector from '../../SvgSelector';
 
 export default function Orders(props) {
+  const [Orders, setOrders] = useState([]);
+  const [OrdersInfo, setOrdersInfo] = useState([]);
+  const [Items, setItems] = useState([]);
+  useEffect(() => {
+    fetch('http://localhost:3001/orders/1')
+      .then((response) => response.json())
+      .then((data) => {
+        setOrders(data);
+      });
+    fetch('http://localhost:3001/orders_info')
+      .then((response) => response.json())
+      .then((data) => {
+        setOrdersInfo(data);
+      });
+    fetch(`http://localhost:3001/items`)
+      .then((response) => response.json())
+      .then((data) => {
+        setItems(data);
+      });
+  }, []);
+
+  Orders.forEach((el) => {
+    Object.assign(el, { info: [] });
+    for (let i = 0; i < OrdersInfo.length; i++) {
+      Object.assign(OrdersInfo[i], { info: [] });
+    }
+  });
+  Orders.forEach((el) => {
+    for (let i = 0; i < OrdersInfo.length; i++) {
+      if (OrdersInfo[i].id_order === el.id) {
+        for (let j = 0; j < Items.length; j++) {
+          if (Items[j].id === OrdersInfo[i].id_item) {
+            el.info.push(Object.assign(OrdersInfo[i], { info: Items[j] }));
+          }
+        }
+      }
+    }
+  });
+
   let showAll = () => {
     return (
       <div className={classes.content_wrapper}>
@@ -18,8 +57,8 @@ export default function Orders(props) {
           </div>
         </div>
         <div className={classes.content}>
-          {props.orders.map((item, index) => (
-            <OrderItem key={index} order={item} catalog={props.catalog} />
+          {Orders.map((item, index) => (
+            <OrderItem key={index} props={item} />
           ))}
         </div>
       </div>
