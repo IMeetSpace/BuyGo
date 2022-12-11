@@ -1,10 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import classes from './Card.module.css';
 import SvgSelector from '../../../SvgSelector';
+import Catalog from '../Catalog';
 
 export default function Card(props) {
+  const [Cart, setCart] = useState([]);
+  useEffect(() => {
+    fetch('http://localhost:3001/cart/1')
+      .then((response) => response.json())
+      .then((data) => {
+        setCart(data);
+      });
+  }, []);
+
+  let isInCart = false;
+  Cart.forEach((el) => {
+    if (el.id_item == props.props.id) {
+      isInCart = true;
+    }
+  });
+  let inCart = () => {
+    if (!isInCart) {
+      return (
+        <div
+          className={classes.addToCart}
+          onClick={() => {
+            props.addToCart(props.props, 50);
+          }}>
+          <SvgSelector id={'plus'} />
+        </div>
+      );
+    } else {
+      return (
+        <NavLink to="/cart" className={classes.goToCart}>
+          <SvgSelector id={'cart'} />
+        </NavLink>
+      );
+    }
+  };
+
   let rating = [];
 
   for (let i = 0; i < props.props.rating; i++) {
@@ -13,26 +49,6 @@ export default function Card(props) {
   for (let i = 0; i < 5 - props.props.rating; i++) {
     rating.push(<SvgSelector key={`${i}`} id="star" />);
   }
-
-  let inCart = () => {
-    return (
-      <div
-        className={classes.addToCart}
-        onClick={() => {
-          props.addToCart(props.props, 50);
-        }}>
-        <SvgSelector id={'plus'} />
-      </div>
-    );
-  };
-
-  let notInCart = () => {
-    return (
-      <NavLink to="/cart" className={classes.goToCart}>
-        <SvgSelector id={'cart'} />
-      </NavLink>
-    );
-  };
 
   return (
     <div className={classes.card}>
@@ -43,7 +59,7 @@ export default function Card(props) {
         <div className={classes.maker}>{props.props.maker}</div>
       </div>
       <div className={classes.rating}>{rating}</div>
-      {!props.isInCart(props.props) ? inCart() : notInCart()}
+      {inCart()}
     </div>
   );
 }

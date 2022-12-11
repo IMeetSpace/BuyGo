@@ -18,7 +18,7 @@ export default function Catalog(props) {
       <h1>Каталог</h1>
       <div className={classes.content}>
         {Catalog.map((item, index) => (
-          <Card key={index} props={item} isInCart={props.isInCart} addToCart={props.addToCart} />
+          <Card key={index} props={item} />
         ))}
       </div>
     </main>

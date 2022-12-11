@@ -60,8 +60,8 @@ export default function OrderItem(props) {
                 <div className={classes.order_item__meta}>
                   <h4 className={classes.name}>{el.info.title}</h4>
                   <h4 className={classes.pricing}>
-                    {el.info.price} * {el.amount} = {(el.info.price * el.amount).toLocaleString()}{' '}
-                    &#8381;
+                    {el.info.price} &#8381; * {el.amount} ={' '}
+                    {(el.info.price * el.amount).toLocaleString()} &#8381;
                   </h4>
                 </div>
               </div>

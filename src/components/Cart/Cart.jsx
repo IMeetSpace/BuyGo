@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import classes from './Cart.module.css';
@@ -9,21 +9,49 @@ import SvgSelector from '../../SvgSelector';
 export default function Cart(props) {
   let full_price = 0;
   let full_count = 0;
+
+  const [profile, setProfile] = useState([]);
+  const [Cart, setCart] = useState([]);
+  const [Items, setItems] = useState([]);
+  useEffect(() => {
+    fetch('http://localhost:3001/users/1')
+      .then((response) => response.json())
+      .then((data) => {
+        setProfile(data[0]);
+      });
+    fetch('http://localhost:3001/cart/1')
+      .then((response) => response.json())
+      .then((data) => {
+        setCart(data);
+      });
+    fetch(`http://localhost:3001/items`)
+      .then((response) => response.json())
+      .then((data) => {
+        setItems(data);
+      });
+  }, []);
+
+  Cart.forEach((el) => {
+    Object.assign(el, { info: [] });
+  });
+  Cart.forEach((el) => {
+    for (let i = 0; i < Items.length; i++) {
+      if (Items[i].id === el.id_item) {
+        el.info.push(Object.assign(el, { info: Items[i] }));
+      }
+    }
+  });
+
   let showAll = () => {
-    props.items.forEach((el) => (full_price += el.price * el.count));
-    props.items.forEach((el) => (full_count += el.count));
+    Cart.forEach((el) => (full_price += el.info.price * el.amount));
+    Cart.forEach((el) => (full_count += el.amount));
     return (
       <div className={classes.content_wrapper}>
         <h1>Корзина</h1>
         <div className={classes.content}>
           <div className={classes.items}>
-            {props.items.map((item, index) => (
-              <CartItem
-                key={index}
-                props={item}
-                deleteFromCart={props.deleteFromCart}
-                updateCartCount={props.updateCartCount}
-              />
+            {Cart.map((item, index) => (
+              <CartItem key={index} props={item} />
             ))}
           </div>
           <div className={classes.details}>
@@ -40,15 +68,15 @@ export default function Cart(props) {
             <div className={classes.buyer_info}>
               <div className={classes.order_detail}>
                 <h4 className={classes.title}>Адрес</h4>
-                <h4 className={classes.text}>г. Санкт-Петербург, пр. Невский, д. 1</h4>
+                <h4 className={classes.text}>{profile.address}</h4>
               </div>
               <div className={classes.order_detail}>
                 <h4 className={classes.title}>Email</h4>
-                <h4 className={classes.text}>Ivan.ivanovich@mail.ru</h4>
+                <h4 className={classes.text}>{profile.mail}</h4>
               </div>
               <div className={classes.order_detail}>
                 <h4 className={classes.title}>Телефон</h4>
-                <h4 className={classes.text}>+7 (951) 342-54-99</h4>
+                <h4 className={classes.text}>{profile.phone}</h4>
               </div>
               <div className={classes.delivery}>
                 Обычная доставка
@@ -74,8 +102,6 @@ export default function Cart(props) {
     );
   };
   return (
-    <main className={classes.cart_wrapper}>
-      {props.items.length > 0 ? showAll() : showNothing()}
-    </main>
+    <main className={classes.cart_wrapper}>{Cart.length > 0 ? showAll() : showNothing()}</main>
   );
 }
