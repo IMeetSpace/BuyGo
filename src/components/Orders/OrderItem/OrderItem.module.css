@@ -1,0 +1,85 @@
+.item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 32px 24px;
+
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+
+    width: calc(100% - 48px);
+    transition: all 500ms ease;
+    cursor: pointer;
+}
+
+.item_active {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 32px 24px;
+    gap: 24px;
+}
+
+.item:hover {
+    transform: scale(1.01);
+    transition: all 500ms ease;
+}
+
+.date,
+.status {
+    color: #888888;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.photos {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px
+}
+
+.img {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+}
+
+.order_items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.order_item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 36px;
+}
+
+.order_item__meta{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.full_price {
+    font-weight: 700;
+}

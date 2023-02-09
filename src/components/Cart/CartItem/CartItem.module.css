@@ -1,0 +1,90 @@
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 32px 24px;
+  gap: 24px;
+
+  width: calc(100% - 48px);
+
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+}
+
+.img {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.counter_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: #888888;
+}
+
+.counter {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  color: #1e1e1e;
+}
+
+.count {
+  width: 50px;
+  text-align: center;
+}
+
+.plus,
+.minus {
+  stroke: #1e1e1e;
+  cursor: pointer;
+}
+
+.plus_off,
+.minus_off {
+  stroke: #888888;
+  cursor: default;
+}
+
+.counter_wrapper span {
+  cursor: pointer;
+}
+
+.meta {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.maker,
+.price {
+  color: #888888;
+}
